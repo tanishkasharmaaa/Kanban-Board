@@ -53,8 +53,11 @@ userRouter.post('/login',async(req,res)=>{
   try {
     
   let user=await UserModel.findOne({email});  
-     let isPasswordCoorect=  bcrypt.compare(password,user.password)
+     
+  let isPasswordCoorect= await bcrypt.compare(password,user.password)
+  console.log(isPasswordCoorect)
     if(!isPasswordCoorect){
+      
 res.status(400).json({message:'Invalid credentials'})
     }
     const accessToken=jwt.sign({userID:user._id,role:user.role,email},process.env.JWT_SECRET_KEY,{algorithm:'HS256'});
