@@ -9,9 +9,9 @@ let count=0
 count++
         }
     })
-    console.log()
+  
     if(count==1){
- res.send("Admin already here")
+ res.json({message:"Admin already here"})
     }
    else{
     next()
