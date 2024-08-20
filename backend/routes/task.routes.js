@@ -43,7 +43,7 @@ res.status(200).send(tasks)
 })
 
 taskRouter.post('/addTask', authMiddleware, async (req, res) => {
-    let { title, description, status, taskDeadline } = req.body;
+    let { title, description, status, taskDeadline,category} = req.body;
     
     // Validate and format the taskDeadline
     let formattedDeadline;
@@ -68,6 +68,7 @@ taskRouter.post('/addTask', authMiddleware, async (req, res) => {
             if (decode) {
                 let tasks = new taskModel({
                     title,
+                    category,
                     description,
                     status,
                     userID: decode.userID,

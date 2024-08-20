@@ -2,6 +2,7 @@ const mongoose=require("mongoose");
 
 const taskSchema=mongoose.Schema({
     title:{type:String,require:true},
+    category:{type:String,require:true},
     description:{type:String,require:true},
     status:{type:String,enum:["progress","pending","complete"],default:"pending"},
     userID:{type:mongoose.Schema.Types.ObjectId,ref:"User",require:true},
