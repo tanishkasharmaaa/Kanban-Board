@@ -18,7 +18,7 @@ userRouter.post("/register",adminCount, async (req, res) => {
  let existingUser=await UserModel.findOne({email})
  console.log(existingUser)
   if(existingUser){
-res.send("User already exist in the database")
+res.status(400).json(message:{"User already exist in the database"})
   }
 
   else{
@@ -37,14 +37,14 @@ res.send("User already exist in the database")
           });
           await user.save();
         }
-         console.log(user)
+      
     res.status(201).send(user);
       });
    
   }
     
   } catch (error) {
-    res.status(500).send("Internal server error", error);
+    res.status(500).json({message:"Internal server error",error});
   }
 });
 
@@ -53,7 +53,7 @@ userRouter.post('/login',async(req,res)=>{
   try {
     let user=await UserModel.findOne({email});   
     if(!user){
-      res.status(400).send("Invalid Credentials")
+      res.status(400).send({message:"Invalid Credentials"})
     }
     else{
        bcrypt.compare(password,user.password,function(err,hash){
@@ -68,7 +68,8 @@ if(hash){
     }})
     }
 } catch (error) {
-    console.log(error)
+  console.log(error);
+  return res.status(500).json({message:'Internal Server Error',error});
   }
 })
 

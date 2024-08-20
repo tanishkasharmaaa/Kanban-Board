@@ -81,7 +81,7 @@ taskRouter.post('/addTask', authMiddleware, async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).send('Internal Server Error');
+        return res.status(400).json({message:'Internal Server Error',error});
     }
 });
 
@@ -92,8 +92,8 @@ taskRouter.patch('/updateTask/:id',authMiddleware,async(req,res)=>{
     res.status(200).json({message:"Task update successfully"})
 
     } catch (error) {
-        console.log(error);
-        return res.status(500).send('Internal Server Error');
+       
+        return res.status(400).json({message:'Internal Server Error',error});
     }
 })
 
@@ -103,7 +103,8 @@ taskRouter.delete('/deleteTask/:id',authMiddleware,async(req,res)=>{
         res.status(200).json({message:"Task deleted successfully"})
     } catch (error) {
         console.log(error);
-        return res.status(500).send('Internal Server Error');
+        console.log(error);
+        return res.status(500).json({message:'Internal Server Error',error});
     }
 })
 
