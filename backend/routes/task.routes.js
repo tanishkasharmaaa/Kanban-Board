@@ -6,6 +6,7 @@ dotenv.config()
 const authMiddleware=require("../middleware/authMiddleware");
 const jwt=require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
+const userMiddleware = require("../middleware/userMiddleware");
 
 
 
@@ -16,16 +17,16 @@ taskRouter.get('/',authMiddleware,async(req,res)=>{
         res.status(200).send("Welcome to Kanban Board");
     } catch (error) {
         console.log(error);
-        return res.status(500).send('Internal Server Error');
+        return res.status(500).json({message:'Internal Server Error'});
     }
 })
 
-taskRouter.get('/allTasks',authMiddleware,async(req,res)=>{
+taskRouter.get('/allTasks',[authMiddleware,userMiddleware],async(req,res)=>{
     try {
         let token=req.headers.authorization.split(' ')[1];
         jwt.verify(token,process.env.JWT_SECRET_KEY,async function(err,decode){
       if(err){
-        res.status(400).send(err)
+        res.status(400).json({err:err})
       }if(decode){
         if(decode.role==="admin"){
             let tasks=await taskModel.find();
@@ -42,7 +43,7 @@ res.status(200).send(tasks)
     }
 })
 
-taskRouter.post('/addTask', authMiddleware, async (req, res) => {
+taskRouter.post('/addTask',[authMiddleware,userMiddleware], async (req, res) => {
     let { title, description, status, taskDeadline,category} = req.body;
     
     // Validate and format the taskDeadline
@@ -85,7 +86,7 @@ taskRouter.post('/addTask', authMiddleware, async (req, res) => {
     }
 });
 
-taskRouter.patch('/updateTask/:id',authMiddleware,async(req,res)=>{
+taskRouter.patch('/updateTask/:id',[authMiddleware,userMiddleware],async(req,res)=>{
     try {
         let task=await taskModel.findByIdAndUpdate({_id:req.params.id},req.body);
     await task.save();
@@ -97,13 +98,13 @@ taskRouter.patch('/updateTask/:id',authMiddleware,async(req,res)=>{
     }
 })
 
-taskRouter.delete('/deleteTask/:id',authMiddleware,async(req,res)=>{
+taskRouter.delete('/deleteTask/:id',[authMiddleware,userMiddleware],async(req,res)=>{
     try {
         let task=await taskModel.findByIdAndDelete({_id:req.params.id});
         res.status(200).json({message:"Task deleted successfully"})
     } catch (error) {
         console.log(error);
-        console.log(error);
+       
         return res.status(500).json({message:'Internal Server Error',error});
     }
 })
