@@ -51,22 +51,21 @@ res.status(400).json({message:"User already exist in the database"})
 userRouter.post('/login',async(req,res)=>{
   let{email,password}=req.body;
   try {
-    let user=await UserModel.findOne({email});   
-    if(!user){
-      res.status(400).send({message:"Invalid Credentials"})
-    }
-    else{
-       bcrypt.compare(password,user.password,function(err,hash){
+    
+  let user=await UserModel.findOne({email});  
+       bcrypt.compare(password,user.password,async function(err,hash){
 if(err){
-  res.status(400).send(err)
+  res.status(400).json(err)
 }
 if(hash){
+ 
+
   let accessToken=jwt.sign({email,role:user.role,userID:user._id },process.env.JWT_SECRET_KEY, { algorithm: 'HS256' })
 
 
   res.status(200).json({message:"User login successfully",accessToken})
     }})
-    }
+    
 } catch (error) {
   console.log(error);
   return res.status(500).json({message:'Internal Server Error',error});
