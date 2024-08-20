@@ -18,7 +18,7 @@ userRouter.post("/register",adminCount, async (req, res) => {
  let existingUser=await UserModel.findOne({email})
  console.log(existingUser)
   if(existingUser){
-res.status(400).json(message:{"User already exist in the database"})
+res.status(400).json({message:"User already exist in the database"})
   }
 
   else{
