@@ -10,7 +10,7 @@ count++
         }
     })
   
-    if(count==1){
+    if(count>1){
  res.json({message:"Admin already here"})
     }
    else{
