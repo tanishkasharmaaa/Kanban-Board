@@ -53,19 +53,12 @@ userRouter.post('/login',async(req,res)=>{
   try {
     
   let user=await UserModel.findOne({email});  
-       bcrypt.compare(password,user.password,async function(err,hash){
-if(err){
-  res.status(400).json(err)
-}
-if(hash){
- 
-
-  let accessToken=jwt.sign({email,role:user.role,userID:user._id },process.env.JWT_SECRET_KEY, { algorithm: 'HS256' })
-
-
-  res.status(200).json({message:"User login successfully",accessToken})
-    }})
-    
+     let isPasswordCoorect=  bcrypt.compare(password,user.password)
+    if(!isPasswordCoorect){
+res.status(400).json({message:'Invalid credentials'})
+    }
+    const accessToken=jwt.sign({userID:user._id,role:user.role,email},process.env.JWT_SECRET_KEY,{algorithm:'HS256'});
+    res.status(200).json({message:'User login successful',accessToken})
 } catch (error) {
   console.log(error);
   return res.status(500).json({message:'Internal Server Error',error});
