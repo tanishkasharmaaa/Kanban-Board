@@ -1,0 +1,105 @@
+const express=require("express");
+const taskModel = require("../models/task.model");
+const taskRouter=express.Router();
+const dotenv=require("dotenv").config();
+const authMiddleware=require("../middleware/authMiddleware");
+const jwt=require("jsonwebtoken")
+
+taskRouter.use(express.json())
+
+taskRouter.get('/',authMiddleware,async(req,res)=>{
+    try {
+        res.status(200).send("Welcome to Kanban Board");
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+    }
+})
+
+taskRouter.get('/allTasks',authMiddleware,async(req,res)=>{
+    try {
+        let token=req.headers.authorization.split(' ')[1];
+        jwt.verify(token,process.env.JWT_SECRET_KEY,async function(err,decode){
+      if(err){
+        res.status(400).send(err)
+      }if(decode){
+        if(decode.role==="admin"){
+            let tasks=await taskModel.find();
+            res.status(200).send(tasks)
+        }
+        let tasks=await taskModel.find({userID:decode.userID});
+res.status(200).send(tasks)
+      }
+        })
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+    }
+})
+
+taskRouter.post('/addTask', authMiddleware, async (req, res) => {
+    let { title, description, status, taskDeadline } = req.body;
+    
+    // Validate and format the taskDeadline
+    let formattedDeadline;
+    if (taskDeadline) {
+        const [day, month, year] = taskDeadline.split('/');
+        formattedDeadline = new Date(`${year}-${month}-${day}`);
+        
+        // Check if the formattedDeadline is valid
+        if (isNaN(formattedDeadline.getTime())) {
+            return res.status(400).json({ error: 'Invalid date format for taskDeadline' });
+        }
+    } else {
+        return res.status(400).json({ error: 'taskDeadline is required' });
+    }
+
+    try {
+        let userToken = req.headers.authorization.split(" ")[1];
+        jwt.verify(userToken, process.env.JWT_SECRET_KEY, async function (err, decode) {
+            if (err) {
+                return res.status(400).send(err);
+            }
+            if (decode) {
+                let tasks = new taskModel({
+                    title,
+                    description,
+                    status,
+                    userID: decode.userID,
+                    taskDeadline: formattedDeadline
+                });
+
+                await tasks.save();
+                return res.status(201).send(tasks);
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+    }
+});
+
+taskRouter.patch('/updateTask/:id',authMiddleware,async(req,res)=>{
+    try {
+        let task=await taskModel.findByIdAndUpdate({_id:req.params.id},req.body);
+    await task.save();
+    res.status(200).json({message:"Task update successfully"})
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+    }
+})
+
+taskRouter.delete('/deleteTask/:id',authMiddleware,async(req,res)=>{
+    try {
+        let task=await taskModel.findByIdAndDelete({_id:req.params.id});
+        res.status(200).json({message:"Task deleted successfully"})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('Internal Server Error');
+    }
+})
+
+module.exports=taskRouter;
