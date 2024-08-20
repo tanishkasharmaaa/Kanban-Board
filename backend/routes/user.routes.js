@@ -2,7 +2,9 @@ const express = require("express");
 const userRouter = express.Router();
 const UserModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
+
+
 const dotenv=require("dotenv").config();
 const adminCount=require("../middleware/adminCount")
 

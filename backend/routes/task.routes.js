@@ -3,7 +3,9 @@ const taskModel = require("../models/task.model");
 const taskRouter=express.Router();
 const dotenv=require("dotenv").config();
 const authMiddleware=require("../middleware/authMiddleware");
-const jwt=require("jsonwebtoken")
+const jwt=require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+
 
 taskRouter.use(express.json())
 
