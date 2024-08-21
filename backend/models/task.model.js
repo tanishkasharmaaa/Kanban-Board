@@ -8,7 +8,7 @@ const taskSchema=mongoose.Schema({
     userID:{type:mongoose.Schema.Types.ObjectId,ref:"User",require:true},
     taskDeadline:{type:Date,require:true},
     taskAddedDate:{type:Date,default:Date.now},
-    completedID:{type:Date,default:null}
+    completedDate:{type:Date,default:null}
     
 },
 {versionKey:false})

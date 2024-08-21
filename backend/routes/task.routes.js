@@ -87,8 +87,20 @@ taskRouter.post('/addTask',[authMiddleware,userMiddleware], async (req, res) => 
 });
 
 taskRouter.patch('/updateTask/:id',[authMiddleware,userMiddleware],async(req,res)=>{
+   
     try {
         let task=await taskModel.findByIdAndUpdate({_id:req.params.id},req.body);
+        if(!task){
+            return res.status(404).json({message:"Task not found"});
+        }
+
+
+        if(req.body.status==='complete'){
+            task.completedDate= new Date()
+            new Intl.DateTimeFormat('en-GB').format(task.completedDate);
+        }
+      
+
     await task.save();
     res.status(200).json({message:"Task update successfully"})
 
