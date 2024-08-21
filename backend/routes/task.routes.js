@@ -77,7 +77,7 @@ taskRouter.post('/addTask',[authMiddleware,userMiddleware], async (req, res) => 
                 });
 
                 await tasks.save();
-                return res.status(201).send(tasks);
+                return res.status(201).json({message:"Task created successfully"});
             }
         });
     } catch (error) {

@@ -55,7 +55,7 @@ userRouter.post('/login',async(req,res)=>{
   let user=await UserModel.findOne({email});  
      
   let isPasswordCoorect= await bcrypt.compare(password,user.password)
-  console.log(isPasswordCoorect)
+  
     if(!isPasswordCoorect){
       
 res.status(400).json({message:'Invalid credentials'})
