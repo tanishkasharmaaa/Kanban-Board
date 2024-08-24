@@ -43,6 +43,29 @@ res.status(200).send(tasks)
     }
 })
 
+taskRouter.get('/search',async(req,res)=>{
+    let{title,category,q,limit=10,page=1}=req.query;
+    let filter={};
+    if(title){
+        filter.title=title.toLowerCase()
+    }
+    if(category){
+        filter.category=category.toLowerCase()
+    }
+    if(q){
+        filter.title={$regex:new RegExp(q,'i')}
+    }
+    try {
+       let task=await taskModel.find(filter).limit(parseInt(limit)).skip((page-1)*limit) ;
+       res.status(200).json(task)
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({message:'Internal Server Error',error});
+    }
+  
+})
+
+
 taskRouter.post('/addTask',[authMiddleware,userMiddleware], async (req, res) => {
     let { title, description, status, taskDeadline,category} = req.body;
     
