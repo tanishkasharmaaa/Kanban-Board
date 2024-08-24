@@ -33,7 +33,7 @@ taskRouter.get('/allTasks',[authMiddleware,userMiddleware],async(req,res)=>{
             res.status(200).send(tasks)
         }
         let tasks=await taskModel.find({userID:decode.userID});
-res.status(200).send(tasks)
+res.status(200).json(tasks)
       }
         })
         
