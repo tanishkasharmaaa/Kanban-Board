@@ -56,8 +56,8 @@ taskRouter.get('/search',async(req,res)=>{
         filter.title={$regex:new RegExp(q,'i')}
     }
     try {
-       let task=await taskModel.find(filter).limit(parseInt(limit)).skip((page-1)*limit) ;
-       res.status(200).send(task)
+       let tasks=await taskModel.find(filter).limit(parseInt(limit)).skip((page-1)*limit) ;
+       res.status(200).json(tasks)
     } catch (error) {
         console.log(error);
         return res.status(400).json({message:'Internal Server Error',error});
