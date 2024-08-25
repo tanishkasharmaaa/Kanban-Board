@@ -66,7 +66,7 @@ function Login() {
 
   return (
     <Box
-      backgroundImage={'/images/1.jpg'} // Dark blue themed background image
+      bgColor={'blue.400'}// Dark blue themed background image
       backgroundSize="cover"
       backgroundPosition="center"
       minHeight="100vh"
