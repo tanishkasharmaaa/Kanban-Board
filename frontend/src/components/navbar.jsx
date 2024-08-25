@@ -1,7 +1,8 @@
-import { Box, Image, Button, IconButton, useDisclosure, Drawer, DrawerBody, DrawerOverlay, DrawerContent, DrawerHeader, DrawerCloseButton, WrapItem, Avatar } from "@chakra-ui/react";
+import { Box, Image, Button, IconButton, useDisclosure, Drawer, DrawerBody, DrawerOverlay, DrawerContent, DrawerHeader, DrawerCloseButton, WrapItem, Avatar, Heading } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { useMediaQuery } from "@chakra-ui/react";
+
 
 function Navbar() {
     const user = localStorage.getItem('user');
@@ -44,12 +45,11 @@ function Navbar() {
                     />
                 )}
                 
-                <Image
+                <Heading
                 onClick={()=>navigate('/dashboard')}
-                    src="/images/logo.png"
-                    alt="Logo"
+                    
                     width={{ base: '200px', md: '250px' }} // Adjust size based on screen width
-                />
+                >Kanban-GO</Heading>
             </Box>
 
             {/* User Info & Logout Section */}

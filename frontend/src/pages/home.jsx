@@ -6,7 +6,7 @@ function Home() {
 
   return (
     <Box
-      backgroundImage={'/images/1.jpg'}
+     bgColor={'blue.400'}
       backgroundSize="cover"
       backgroundPosition="center"
       display="flex"

@@ -73,7 +73,7 @@ function Register() {
 
   return (
     <Box
-      backgroundImage={'/images/1.jpg'} // Same dark blue background image
+      bgColor={'blue.400'} // Same dark blue background image
       backgroundSize="cover"
       backgroundPosition="center"
       minHeight="100vh"

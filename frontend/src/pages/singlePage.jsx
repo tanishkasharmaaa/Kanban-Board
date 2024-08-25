@@ -145,7 +145,7 @@ function SinglePage() {
 
   return (<Box>
     <Navbar/>
-     <Box bg="blue.500" color="white" minH="100vh" p={6}>
+     <Box bg="blue.400" color="white" minH="100vh" p={6}>
       
       <Heading mb={6} textAlign="center">Manage Tasks for {query}</Heading>
       

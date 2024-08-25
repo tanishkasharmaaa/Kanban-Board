@@ -43,13 +43,13 @@ function AddTasks() {
   }
 
   return (
-    <Box backgroundImage={'/images/1.jpg'} minH="100vh" pt={6} color="white">
+    <Box bgColor={'blue.400'} minH="100vh" pt={6} color="white">
       <Navbar />
       <Heading mb={6} textAlign="center" color="white">Add New Task</Heading>
       <Box 
         maxW="500px" 
         mx="auto" 
-        bg="blue.700" 
+       bgColor={'blue.300'}
         p={6} 
         borderRadius="md" 
         boxShadow="lg" 
@@ -66,7 +66,7 @@ function AddTasks() {
               name="title"
               value={form.title}
               onChange={handleForm}
-              bg="blue.800"
+              bg="blue.400"
               color="white"
               _placeholder={{ color: 'gray.400' }}
             />
@@ -78,7 +78,7 @@ function AddTasks() {
               name="category"
               value={form.category}
               onChange={handleForm}
-              bg="blue.800"
+              bg="blue.400"
               color="white"
               _placeholder={{ color: 'gray.400' }}
             >
@@ -99,7 +99,7 @@ function AddTasks() {
               name="description"
               value={form.description}
               onChange={handleForm}
-              bg="blue.800"
+              bg="blue.400"
               color="white"
               _placeholder={{ color: 'gray.400' }}
             />
@@ -111,7 +111,7 @@ function AddTasks() {
               name="status"
               value={form.status}
               onChange={handleForm}
-              bg="blue.800"
+              bg="blue.400"
               color="white"
               _placeholder={{ color: 'gray.400' }}
             >
@@ -127,7 +127,7 @@ function AddTasks() {
               name="taskDeadline"
               value={form.taskDeadline}
               onChange={handleForm}
-              bg="blue.800"
+              bg="blue.400"
               color="white"
             />
           </FormControl>
