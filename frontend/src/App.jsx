@@ -9,6 +9,7 @@ import {Login} from './pages/login'
 import {Dashboard} from './pages/dashboard'
 import {AddTasks} from './pages/addTask'
 import { TaskList } from './pages/taskList'
+import { SinglePage } from './pages/singlePage'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,6 +23,7 @@ function App() {
 <Route path='/dashboard' element={<Dashboard/>}/>
 <Route path='/addTasks' element={<AddTasks/>}/>
 <Route path='/taskList' element={<TaskList/>}/>
+<Route path='/singletask/:query' element={<SinglePage/>}/>
 </Routes>
     </>
   )

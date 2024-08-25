@@ -1,12 +1,19 @@
 import { useNavigate } from "react-router-dom"
+import { Navbar } from "../components/navbar"
+import { AllTodos } from "./AllTodos"
 
 function Dashboard(){
     let navigate=useNavigate()
+    let token=localStorage.getItem('accessToken');
+    let user=localStorage.getItem('user');
+    if(!token&&!user){
+        navigate('/register')
+    }
     return(
         <>
-        <h1>Dashboard</h1>
-        <button onClick={()=>navigate('/addTasks')}>Add Tasks</button>
-        <button onClick={()=>navigate('/taskList')}>List of tasks Folder</button>
+        <Navbar/>
+        <AllTodos/>
+      
         </>
     )
 }
