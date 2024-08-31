@@ -5,7 +5,7 @@ const taskSchema=mongoose.Schema({
     category:{type:String,require:true},
     description:{type:String,require:true},
     status:{type:String,enum:["progress","pending","complete"],default:"pending"},
-    userID:{type:mongoose.Schema.Types.ObjectId,ref:"User",require:true},
+    userID:{type:mongoose.Schema.Types.ObjectId,ref:"user",require:true},
     taskDeadline:{type:Date,require:true},
     taskAddedDate:{type:Date,default:Date.now},
     completedDate:{type:Date,default:null}

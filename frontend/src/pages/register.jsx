@@ -59,6 +59,14 @@ function Register() {
         });
         navigate('/login');
       }
+     else{
+      toast({
+        title: 'User exist. Please go to login',
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+      });
+     }
     } catch (error) {
       console.error(error);
       toast({
