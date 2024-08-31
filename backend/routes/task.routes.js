@@ -44,6 +44,16 @@ res.status(200).json(tasks)
 })
 
 taskRouter.get('/search',async(req,res)=>{
+    let userId;
+    let token=req.headers.authorization.split(" ")[1];
+    jwt.verify(token,process.env.JWT_SECRET_KEY,function(err,decode){
+if(err){
+    res.status(400).json({err})
+}
+if(decode){
+    userId=decode.userID
+}
+    })
     let{title,category,q,limit=10,page=1}=req.query;
     let filter={};
     if(title){
@@ -56,7 +66,7 @@ taskRouter.get('/search',async(req,res)=>{
         filter.title={$regex:new RegExp(q,'i')}
     }
     try {
-       let tasks=await taskModel.find(filter).limit(parseInt(limit)).skip((page-1)*limit) ;
+       let tasks=await taskModel.find({userID:userId},filter).limit(parseInt(limit)).skip((page-1)*limit) ;
        res.status(200).json(tasks)
     } catch (error) {
         console.log(error);
