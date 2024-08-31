@@ -43,37 +43,52 @@ res.status(200).json(tasks)
     }
 })
 
-taskRouter.get('/search',async(req,res)=>{
+taskRouter.get('/search', async (req, res) => {
     let userId;
-    let token=req.headers.authorization.split(" ")[1];
-    jwt.verify(token,process.env.JWT_SECRET_KEY,function(err,decode){
-if(err){
-    res.status(400).json({err})
-}
-if(decode){
-    userId=decode.userID
-}
-    })
-    let{title,category,q,limit=10,page=1}=req.query;
-    let filter={};
-    if(title){
-        filter.title=title.toLowerCase()
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+        return res.status(400).json({ message: 'Token not provided' });
     }
-    if(category){
-        filter.category=category.toLowerCase()
-    }
-    if(q){
-        filter.title={$regex:new RegExp(q,'i')}
-    }
+
     try {
-       let tasks=await taskModel.find({userID:userId},filter).limit(parseInt(limit)).skip((page-1)*limit) ;
-       res.status(200).json(tasks)
+        // Verify the token
+        const decoded = await new Promise((resolve, reject) => {
+            jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decode) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(decode);
+                }
+            });
+        });
+
+        // Set userId from the decoded token
+        userId = decoded.userID;
+
+        const { title, category, q, limit = 10, page = 1 } = req.query;
+        const filter = {};
+
+        if (title) {
+            filter.title = title.toLowerCase();
+        }
+        if (category) {
+            filter.category = category.toLowerCase();
+        }
+        if (q) {
+            filter.title = { $regex: new RegExp(q, 'i') };
+        }
+
+        // Fetch tasks with the filter and pagination
+        const tasks = await taskModel.find({ userID: userId, ...filter }).limit(parseInt(limit)).skip((page - 1) * limit);
+        res.status(200).json(tasks);
+
     } catch (error) {
-        console.log(error);
-        return res.status(400).json({message:'Internal Server Error',error});
+        console.error(error);
+        res.status(400).json({ message: 'Internal Server Error', error });
     }
-  
-})
+});
+
 
 
 taskRouter.post('/addTask',[authMiddleware,userMiddleware], async (req, res) => {
