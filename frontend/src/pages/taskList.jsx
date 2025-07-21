@@ -97,7 +97,7 @@ function TaskList() {
   const [isMediumScreen] = useMediaQuery("(max-width: 900px)");
 
   return (
-    <Box bg="blue.400">
+    <Box >
         <Navbar/>
       <Box   p={10} textAlign="center">
         

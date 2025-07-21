@@ -117,7 +117,6 @@ function Register() {
               value={form.name}
               onChange={handleForm}
               placeholder="Enter your name"
-              bg="white"
               focusBorderColor="blue.300"
             />
           </FormControl>
@@ -129,7 +128,6 @@ function Register() {
               value={form.email}
               onChange={handleForm}
               placeholder="Enter your email"
-              bg="white"
               focusBorderColor="blue.300"
             />
           </FormControl>
@@ -141,7 +139,7 @@ function Register() {
               value={form.password}
               onChange={handleForm}
               placeholder="Enter your password"
-              bg="white"
+              
               focusBorderColor="blue.300"
             />
           </FormControl>
