@@ -59,10 +59,17 @@ function SinglePage() {
       if (res.ok) {
         toast({ title: "Task created successfully", status: "success", duration: 3000, isClosable: true });
         getData()
-       
+        setCreateTask({
+        title:"",
+        category:"",
+        status:"",
+        description:"",
+        taskDeadline:""
+      })
       } else {
         throw new Error('Failed to create task');
       }
+     
     } catch (error) {
       toast({ title: "Error creating task", description: error.message, status: "error", duration: 3000, isClosable: true });
     }

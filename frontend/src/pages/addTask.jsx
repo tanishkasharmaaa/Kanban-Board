@@ -36,6 +36,13 @@ function AddTasks() {
         alert('Task added successfully');
         navigate('/taskList');
       }
+      setForm({
+        title:"",
+        category:"",
+        description:"",
+        status:"",
+        taskDeadline:""
+      })
     } catch (error) {
       console.log(error);
       alert(error);
