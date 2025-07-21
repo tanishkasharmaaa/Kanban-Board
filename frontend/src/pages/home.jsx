@@ -36,7 +36,7 @@ function Home() {
           fontFamily="'Tangerine', cursive"
           color="teal.300" // Light teal for contrast against the dark background
         >
-          Welcome to Kanban Board
+          Welcome to Kanban-Go
         </Heading>
         <Text
           fontSize={{ base: 'md', md: 'lg' }}

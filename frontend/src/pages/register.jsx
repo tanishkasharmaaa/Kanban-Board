@@ -118,6 +118,7 @@ function Register() {
               onChange={handleForm}
               placeholder="Enter your name"
               focusBorderColor="blue.300"
+              
             />
           </FormControl>
           <FormControl id="email" mb={4} isRequired>
