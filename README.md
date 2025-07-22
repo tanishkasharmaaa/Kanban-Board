@@ -11,7 +11,7 @@ A full-stack Kanban Board web application for managing and organizing tasks base
 
 | Home Page | Task List | Add Task |
 |-----------|-----------|----------|
-| ![Home](./githubImages/2.png) | ![TaskList](./gitHubImages/5.png) | ![AddTask](./gitHubImages/4.png) |
+|![Home](./githubImages/2.png) | ![TaskList](./gitHubImages/5.png) | ![AddTask](./gitHubImages/4.png) |
 
 ---
 
